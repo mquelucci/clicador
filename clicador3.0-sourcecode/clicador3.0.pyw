@@ -32,6 +32,10 @@ def clicar(time):
     while not(keyboard.is_pressed('-')):
         mouse.click('left')
         sleep(time)
+    pg.popup_no_titlebar(f"PRESSIONE (=) PARA CLICAR NOVAMENTE\nPRESSIONER ESC PARA RECONFIGURAR",
+                         background_color='white',
+                         text_color='black',
+                         font=("Open Sans",12,"bold underline"))
     while True:
         if keyboard.is_pressed("="):
             clicar(time)
@@ -116,12 +120,18 @@ if not importError:
                     pg.popup_no_titlebar('O INTERVALO DE CLIQUE NÃO É UM NÚMERO VÁLIDO',background_color='yellow',text_color='red',font=("Open Sans",12,"bold underline"))
 
                 if checkClickInterval and checkTimeToStart:
-                    pg.popup_no_titlebar(f"INICIANDO EM {timeToStart} SEGUNDOS!\nTECLA (-) -> PARA O CLIQUE\nTECLA (=) -> RETOMA O CLIQUE\nTECLA (ESC) -> ALTERAR OS PARÂMETROS (SOMENTE DEPOIS DE PARAR O CLIQUE)",
-                                         background_color='white',text_color='black',font=("Open Sans",12,"bold underline"))
-                    janela.hide()
+                    pg.popup_no_titlebar(f"ESSA TELA SERÁ FECHADA EM {timeToStart} SEGUNDOS!\nTECLA (-) -> PARA O CLIQUE\nTECLA (=) -> RETOMA O CLIQUE\nTECLA (ESC) -> ALTERAR OS PARÂMETROS (SOMENTE DEPOIS DE PARAR O CLIQUE)",
+                                         background_color='white',
+                                         text_color='black',
+                                         font=("Open Sans",12,"bold underline"),
+                                         auto_close=True,
+                                         auto_close_duration=timeToStart)
+                    janela.disable()
+                    janela.minimize()
                     sleep(timeToStart)
                     clicar(clickInterval)
-                    janela.un_hide()
+                    janela.enable()
+                    janela.normal()
                 
         janela.close()
 
